@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.vmo</groupId>
-	<artifactId>fresher</artifactId>
+	<artifactId>FresherManager_HungNK</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FresherManager_HungNK</name>
 	<description>Fresher Manager Project for VMO</description>
