@@ -16,7 +16,7 @@ import java.util.List;
 public class Fresher extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -26,13 +26,13 @@ public class Fresher extends BaseEntity{
     @Column(name = "DOB", nullable = false)
     private LocalDate dob;
 
-    @Column(name = "ADDRESS", nullable = false)
+    @Column(name = "ADDRESS")
     private String address;
 
-    @Column(name = "PHONE", nullable = false)
+    @Column(name = "PHONE")
     private String phone;
 
-    @Column(name = "EMAIL", nullable = false)
+    @Column(name = "EMAIL")
     private String email;
 
     @OneToMany(mappedBy = "fresher" )

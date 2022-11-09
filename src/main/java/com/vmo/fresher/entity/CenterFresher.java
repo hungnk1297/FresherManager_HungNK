@@ -15,19 +15,19 @@ import java.time.LocalDate;
 public class CenterFresher extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "CENTER_ID")
+    @JoinColumn(name = "CENTER_ID", nullable = false)
     private Center center;
 
     @ManyToOne
-    @JoinColumn(name = "FRESHER_ID")
+    @JoinColumn(name = "FRESHER_ID", nullable = false)
     private Fresher fresher;
 
-    @Column(name = "START_DATE")
+    @Column(name = "START_DATE", nullable = false)
     private LocalDate startDate;
 
     @Column(name = "END_DATE")
