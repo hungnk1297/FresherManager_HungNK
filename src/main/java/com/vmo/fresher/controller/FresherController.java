@@ -4,6 +4,7 @@ import com.vmo.fresher.entity.Fresher;
 import com.vmo.fresher.service.FresherService;
 import lombok.RequiredArgsConstructor;
 import model.request.FresherCreateRequest;
+import model.response.FresherResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,11 @@ public class FresherController {
     @GetMapping("/all")
     public ResponseEntity<List<String>> findAllFreshers(){
         return ResponseEntity.ok(fresherService.findAllFresher());
+    }
+
+    @GetMapping("/{fresherId}")
+    public ResponseEntity<FresherResponse> findById(@PathVariable Long fresherId){
+        return ResponseEntity.ok(fresherService.findById(fresherId));
     }
 
 }
