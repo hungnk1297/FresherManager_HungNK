@@ -17,3 +17,10 @@ server:
   port: 8080
   servlet:
     context-path: /fm
+
+jwt:
+  secret: john_secret
+  expire-ms: 86400000
+  get:
+    token:
+      uri: /authenticate

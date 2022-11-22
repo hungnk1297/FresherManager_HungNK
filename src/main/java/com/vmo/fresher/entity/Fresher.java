@@ -38,4 +38,7 @@ public class Fresher extends BaseEntity{
     @OneToMany(mappedBy = "fresher" )
     private List<CenterFresher> centerFresherList;
 
+    @OneToMany(mappedBy = "fresher" )
+    private List<AssignmentScore> assignmentScores;
+
 }

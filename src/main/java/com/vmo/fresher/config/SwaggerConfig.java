@@ -1,5 +1,6 @@
 package com.vmo.fresher.config;
 
+import com.vmo.fresher.common.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +14,17 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
+import java.util.List;
 
 @EnableWebMvc
 @Component
@@ -25,6 +32,7 @@ import javax.annotation.PostConstruct;
 @Configuration
 @Slf4j
 public class SwaggerConfig implements WebMvcConfigurer {
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/api/v2/api-docs", "/v2/api-docs");
@@ -46,18 +54,39 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(getApiInfo())
+                .securityContexts(Collections.singletonList(securityContext()))
+                .securitySchemes(List.of(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.vmo.fresher.controller"))
+                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo getApiInfo() {
         return new ApiInfoBuilder()
-                .title("Swagger API Doc")
-                .description("More description about the API")
+                .title("Fresher Manager API Doc")
+                .description("Simple description about the API")
                 .version("1.0.0")
                 .build();
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", Constant.AUTHORIZATION_HEADER, "header");
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .build();
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return List.of(new SecurityReference("JWT", authorizationScopes));
     }
 
     @PostConstruct
